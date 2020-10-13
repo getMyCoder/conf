@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>nginx安装</title>
+</head>
+<body>
+<div class="main" style="max-width: 1200px;margin: 0 auto;">
+    <h4 style="text-align: center">Linux上安装nginx</h4>
+    <pre style="font-size: 14px;line-height: 25px;">
+        一、第一种安装
+            1.安装依赖包
+                //一键安装上面四个依赖
+                yum -y install gcc zlib zlib-devel pcre-devel openssl openssl-devel
+            2.下载并解压安装包
+                //创建一个文件夹
+                cd /usr/local
+                mkdir nginx
+                cd nginx
+                //下载tar包
+                wget http://nginx.org/download/nginx-1.13.7.tar.gz
+                tar -xvf nginx-1.13.7.tar.gz
+            3.安装nginx
+                //进入nginx目录
+                cd /usr/local/nginx
+                //进入目录
+                cd nginx-1.13.7
+                //执行命令
+                ./configure
+                //执行make命令
+                make
+                //执行make install命令
+                make install
+            4.配置nginx.conf
+                # 打开配置文件
+                vi /usr/local/nginx/conf/nginx.conf
+            5.启动nginx
+                /usr/local/nginx/sbin/nginx -s reload
+                如果出现报错：nginx: [error] open() ＂/usr/local/nginx/logs/nginx.pid＂ failed
+                则运行： /usr/local/nginx/sbin/nginx -c /usr/local/nginx/conf/nginx.conf
+                再次启动即可！
+            6.查看nginx进程是否启动
+                ps -ef | grep nginx
+            7.若想使用外部主机连接上虚拟机访问，需要关闭虚拟机的防火墙
+                centOS6及以前版本使用命令： systemctl stop iptables.service
+                centOS7关闭防火墙命令： systemctl stop firewalld.service
+                随后访问该ip即可看到nginx界面
+            8.安装完成一般常用命令
+                进入安装目录中，
+                命令： cd /usr/local/nginx/sbin
+                启动，关闭，重启，命令：
+                ./nginx 启动
+                ./nginx -s stop 关闭
+                ./nginx -s reload 重启
+    </pre>
+    <pre style="font-size: 14px;line-height: 25px;">
+        二、第二种安装方法
+            1.下载rpm安装包
+            2.安装这个rpm包
+                rpm -ivh nginx-release-centos-6-0.el6.ngx.noarch.rpm
+            3.开始正式安装nginx
+                yum install nginx
+            4.nginx的几个默认目录
+                输入命令: whereis nginx
+                nginx: /usr/sbin/nginx /etc/nginx /usr/share/nginx
+                配置所在目录：/etc/nginx/
+                PID目录：/var/run/nginx.pid
+                错误日志：/var/log/nginx/error.log
+                访问日志：/var/log/nginx/access.log
+                默认站点目录：/usr/share/nginx/html
+            5.常用命令
+                启动nginx：nginx
+                重启nginx：killall -HUP nginx
+                测试nginx配置：nginx -t
+    </pre>
+    <pre style="font-size: 14px;line-height: 25px;">
+        三、Linux中获取不到ip
+            vi /etc/sysconfig/network-scripts/ifcfg-ens33把noboot的值改为yes
+    </pre>
+    <pre style="font-size: 14px;line-height: 25px;">
+        四、关闭防火墙
+            ①查看防火状态
+            systemctl status firewalld
+            service  iptables status
+            ②暂时关闭防火墙
+            systemctl stop firewalld
+            service  iptables stop
+            ③永久关闭防火墙
+            systemctl disable firewalld
+            chkconfig iptables off
+            ④重启防火墙
+            systemctl enable firewalld
+            service iptables restart
+            ⑤永久关闭后重启
+            //暂时还没有试过
+            chkconfig iptables on
+    </pre> 
+</div>
+</body>
+</html>
