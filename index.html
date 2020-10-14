@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>configure</title>
+    <script type="text/javascript" src="static/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="static/tyle.css"/>
+</head>
+<body>
+<div class="main">
+    <div class="left">
+        <div class="left-con">
+            <ul></ul>
+        </div>
+    </div>
+    <div class="right">
+        <iframe class="iframe" src="html/nginx.html" scrolling="yes" frameborder="0"></iframe>
+    </div>
+</div>
+<script type="text/javascript">
+    var HW = {
+        width: document.documentElement.clientWidth,
+        height: document.documentElement.clientHeight,
+    }
+    $(function () {
+        html(function () {
+            style()
+        })
+    })
+
+    function style() {
+        $(".left").height(HW.height)
+        $(".right").css({
+            'width': (parseInt($(".main").width()) - parseInt($(".left").width())) + "px",
+            'height': HW.height + "px",
+        })
+        $(".iframe").css({
+            'width': (parseInt($(".main").width()) - parseInt($(".left").width())) + "px",
+            'height': HW.height + "px",
+        })
+        $(".left-con ul li").eq(0).addClass('active')
+        $(".iframe").attr('src', $(".left-con ul li").eq(0).attr('data-url'))
+        $(".left-con ul li").each(function () {
+            $(this).click(function () {
+                $(this).addClass('active').siblings().removeClass('active')
+                if ($(this).attr('data-url') && $(this).attr('data-url') !== '') {
+                    $(".iframe").attr('src', $(this).attr('data-url'))
+                } else {
+                    $(".iframe").attr('src', 'html/404.html')
+                }
+            })
+        })
+    }
+
+    function html(callback) {
+        $.ajax({
+            type: "GET",
+            url: "static/data.json",
+            success: function (data) {
+                var htmls = ''
+                for (var i = 0; i < data.data.length; i++) {
+                    htmls += '<li data-url="' + data.data[i].url + '"><p>' + data.data[i].name + '</p></li>'
+                }
+                $(".left-con ul").append(htmls)
+                if (callback) {
+                    callback()
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+html{margin: 0;padding: 0;}
+body {margin: 0;padding: 0;font-family: '微软雅黑';position: relative;background: #f9f9fb;}
+h1, h2, h3, h4, h5, h6, ul, ol, li, dl, dd, dt, p {list-style: none;margin: 0;padding: 0;}
+a {text-decoration: none;outline: none}
+a:link{}
+a:visited{}
+a:active{ outline:none;background: none;text-decoration: none;-webkit-tap-highlight-color:rgba(0,0,0,0);
+    -webkit-tap-highlight-color: transparent;}
+img {margin: 0;padding: 0;}
+.clear {clear: both;}
+.main{position: relative;}
+.left{position: fixed;top: 0;left: 0;width: 250px;overflow: hidden;border-right: 1px solid #e4e4e4;background: #fff;}
+.right{position: absolute;top: 0;right: 0;overflow: hidden;}
+.left-con{width: 300px;height: 100%;overflow-y: auto;}
+.left-con ul{width: 250px;}
+.left-con ul li{line-height: 35px;padding-left: 15px;border-bottom: 1px solid #f1f1f1;}
+.left-con ul li p{font-size: 14px;cursor: pointer;}
+.left-con ul li:hover{background: #1E9FFF;color: #fff;}
+.active{background: #1E9FFF;color: #fff;}
